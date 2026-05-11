@@ -2,17 +2,22 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { signOut } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   ArrowLeftEndOnRectangleIcon,
   ArrowTopRightOnSquareIcon,
   BuildingOfficeIcon,
   CalendarDaysIcon,
   ChartBarIcon,
+  MoonIcon,
   PlayCircleIcon,
   SparklesIcon,
+  SunIcon,
   UserGroupIcon,
 } from '@heroicons/react/24/outline'
+import { useTheme } from '@/context/ThemeContext'
+import ProfilePhotoButton from '@/components/ProfilePhotoButton'
 
 const navItems = [
   { href: '/admin/dashboard', label: 'Tableau de bord', icon: ChartBarIcon },
@@ -24,6 +29,30 @@ const navItems = [
 
 export default function AdminSidebar() {
   const pathname = usePathname()
+  const { isDark, toggleTheme } = useTheme()
+  const { data: session } = useSession()
+  const [adminPhotoUrl, setAdminPhotoUrl] = useState('')
+  const adminEmail = session?.user?.email || ''
+  const adminName = useMemo(
+    () => adminEmail.split('@')[0] || 'Admin',
+    [adminEmail]
+  )
+
+  useEffect(() => {
+    if (!adminEmail) return
+
+    try {
+      setAdminPhotoUrl(localStorage.getItem(`adminPhoto:${adminEmail}`) || '')
+    } catch {}
+  }, [adminEmail])
+
+  const handleAdminPhotoChange = (photoUrl) => {
+    setAdminPhotoUrl(photoUrl)
+
+    try {
+      localStorage.setItem(`adminPhoto:${adminEmail}`, photoUrl)
+    } catch {}
+  }
 
   return (
     <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-white/10 bg-[#1F2937] shadow-sm lg:flex">
@@ -49,7 +78,7 @@ export default function AdminSidebar() {
               className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold transition-all ${
                 isActive
                   ? 'bg-[#10B981] text-white shadow-glow'
-                  : 'text-gray-400 hover:bg-[#111827] hover:text-[#F9FAFB]'
+                  : 'text-gray-400 hover:-translate-y-0.5 hover:bg-[#10B981]/10 hover:text-[#10B981]'
               }`}
             >
               <Icon className="h-5 w-5 shrink-0" />
@@ -60,16 +89,40 @@ export default function AdminSidebar() {
       </nav>
 
       <div className="space-y-2 border-t border-white/10 px-3 py-4">
+        {adminEmail && (
+          <div className="pb-2">
+            <ProfilePhotoButton
+              name={adminName}
+              photoUrl={adminPhotoUrl}
+              onPhotoChange={handleAdminPhotoChange}
+              caption="Administrateur"
+            />
+          </div>
+        )}
+
+        <button
+          type="button"
+          onClick={toggleTheme}
+          className="theme-toggle flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold"
+        >
+          {isDark ? (
+            <SunIcon className="h-5 w-5" />
+          ) : (
+            <MoonIcon className="h-5 w-5" />
+          )}
+          {isDark ? 'Mode clair' : 'Mode sombre'}
+        </button>
+
         <Link
           href="/"
-          className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold text-gray-400 hover:bg-[#111827] hover:text-[#F9FAFB]"
+          className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold text-gray-400 hover:-translate-y-0.5 hover:bg-[#10B981]/10 hover:text-[#10B981]"
         >
           <ArrowTopRightOnSquareIcon className="h-5 w-5" />
           Site public
         </Link>
         <button
           onClick={() => signOut({ callbackUrl: '/login' })}
-          className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold text-gray-400 hover:bg-red-500/10 hover:text-red-300"
+          className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold text-gray-400 hover:-translate-y-0.5 hover:bg-red-500/10 hover:text-red-300"
         >
           <ArrowLeftEndOnRectangleIcon className="h-5 w-5 shrink-0" />
           Déconnexion
