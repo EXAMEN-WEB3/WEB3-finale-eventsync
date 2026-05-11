@@ -29,7 +29,7 @@ export default async function SessionPage({
   )
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800">
+    <main className="pt-20 min-h-screen bg-gradient-to-br from-gray-900 to-gray-800">
       <div className="container mx-auto max-w-3xl px-4 py-8">
         {/* En-tête de la session */}
         <div className="mb-6 rounded-xl border border-gray-700 bg-[#111827] p-6 shadow-lg">
