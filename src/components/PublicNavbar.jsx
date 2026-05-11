@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
+import { signOut, useSession } from 'next-auth/react'
 import {
   Bars3Icon,
   XMarkIcon,
@@ -24,6 +25,7 @@ export default function PublicNavbar() {
   const pathname = usePathname()
   const router = useRouter()
   const { participant, logoutParticipant, updateParticipantPhoto, loaded } = useParticipant()
+  const { data: adminSession, status: adminStatus } = useSession()
   const { isDark, toggleTheme } = useTheme()
   const [mobileOpen, setMobileOpen] =
     useState(false)
@@ -56,6 +58,14 @@ export default function PublicNavbar() {
     setMobileOpen(false)
     router.push('/login')
   }
+
+  const handleAdminLogout = () => {
+    setMobileOpen(false)
+    signOut({ callbackUrl: '/login' })
+  }
+
+  const adminConnected = adminStatus === 'authenticated'
+  const authLoaded = loaded && adminStatus !== 'loading'
 
   return (
       <header className="sticky top-0 z-50 border-b border-white/10 bg-[#111827]/95 backdrop-blur">
@@ -121,7 +131,7 @@ export default function PublicNavbar() {
               {isDark ? 'Clair' : 'Sombre'}
             </span>
           </button>
-          {loaded && participant && (
+          {authLoaded && participant && (
             <>
               <ProfilePhotoButton
                 name={participant.pseudo}
@@ -142,7 +152,19 @@ export default function PublicNavbar() {
               </button>
             </>
           )}
-          {loaded && !participant && (
+          {authLoaded && !participant && adminConnected && (
+            <button
+              type="button"
+              onClick={handleAdminLogout}
+              title={`Déconnecter ${adminSession?.user?.email || 'admin'}`}
+              aria-label="Déconnecter l'administrateur"
+              className="rounded-lg px-4 py-2 text-sm font-medium text-gray-300 transition hover:-translate-y-0.5 hover:bg-red-500/10 hover:text-red-300"
+            >
+              <ArrowRightOnRectangleIcon className="h-5 w-5" />
+              <span className="hidden lg:inline">Déconnexion</span>
+            </button>
+          )}
+          {authLoaded && !participant && !adminConnected && (
             <Link
               href="/login"
               className="flex items-center gap-2 rounded-lg bg-[#10B981] px-4 py-2 text-sm font-semibold text-white shadow-glow transition hover:-translate-y-0.5 hover:bg-emerald-700"
@@ -209,7 +231,7 @@ export default function PublicNavbar() {
               </button>
             </div>
 
-            {loaded && participant && (
+            {authLoaded && participant && (
               <>
                 <div className="mt-1 px-1">
                   <ProfilePhotoButton
@@ -229,7 +251,17 @@ export default function PublicNavbar() {
                 </button>
               </>
             )}
-            {loaded && !participant && (
+            {authLoaded && !participant && adminConnected && (
+              <button
+                type="button"
+                onClick={handleAdminLogout}
+                className="flex items-center gap-3 rounded-lg px-4 py-3 text-left text-sm font-medium text-gray-300 transition hover:bg-red-500/10 hover:text-red-300"
+              >
+                <ArrowRightOnRectangleIcon className="h-5 w-5" />
+                <span>Déconnexion admin</span>
+              </button>
+            )}
+            {authLoaded && !participant && !adminConnected && (
               <Link
                 href="/login"
                 onClick={() => setMobileOpen(false)}
