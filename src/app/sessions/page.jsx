@@ -40,7 +40,7 @@ export default async function SessionsPage() {
   })
 
   return (
-    <main className="pt-18 min-h-screen bg-[#111827] text-[#F9FAFB]">
+    <main className="min-h-screen bg-[#111827] text-[#F9FAFB]">
       <section className="border-b border-white/10 bg-[#1F2937]">
         <div className="container mx-auto px-4 py-10">
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
