@@ -182,6 +182,14 @@ export default function LoginPage() {
                       participant
                     </button>
 
+                    <button
+                        type="button"
+                        onClick={() => router.push('/')}
+                        className="w-full rounded-xl border border-white/15 px-4 py-2.5 text-sm font-semibold text-gray-300 transition hover:border-[#10B981] hover:bg-[#10B981]/15 hover:text-[#10B981]"
+                    >
+                      Explorer sans connexion
+                    </button>
+
                     <p className="text-center text-xs text-gray-400">
                       Vos favoris et questions seront
                       sauvegardés localement.
