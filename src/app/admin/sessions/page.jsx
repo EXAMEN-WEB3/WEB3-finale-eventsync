@@ -4,11 +4,56 @@ import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import {
+  CalendarDaysIcon,
+  ClockIcon,
   MagnifyingGlassIcon,
+  MapPinIcon,
+  PencilSquareIcon,
   PlayCircleIcon,
   PlusIcon,
+  TrashIcon,
 } from '@heroicons/react/24/outline'
 import { LoadingSpinner } from '@/components/ui'
+
+function getSessionStatus(session) {
+  const now = new Date()
+  const start = new Date(session.startTime)
+  const end = new Date(session.endTime)
+
+  if (now >= start && now <= end) {
+    return {
+      label: 'En cours',
+      className: 'border-red-400/30 bg-red-500/10 text-red-300',
+    }
+  }
+
+  if (now < start) {
+    return {
+      label: 'À venir',
+      className: 'border-[#D3DBC4]/30 bg-[#D3DBC4]/10 text-[#D3DBC4]',
+    }
+  }
+
+  return {
+    label: 'Terminé',
+    className: 'border-white/15 bg-white/5 text-gray-400',
+  }
+}
+
+function formatDate(value) {
+  return new Date(value).toLocaleDateString('fr-FR', {
+    weekday: 'short',
+    day: '2-digit',
+    month: 'short',
+  })
+}
+
+function formatTime(value) {
+  return new Date(value).toLocaleTimeString('fr-FR', {
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+}
 
 export default function AdminSessionsPage() {
   const [sessions, setSessions] = useState([])
@@ -122,93 +167,97 @@ export default function AdminSessionsPage() {
             : 'Aucune session pour le moment.'}
         </div>
       ) : (
-        <div className="overflow-hidden rounded-lg border border-white/10 bg-[#1F2937] shadow-sm">
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-sm">
-              <thead className="bg-[#111827] text-xs uppercase tracking-wide text-gray-400">
-                <tr>
-                  <th className="px-5 py-3 text-left font-bold">
-                    Titre
-                  </th>
+        <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-3">
+          {filtered.map((session) => {
+            const status = getSessionStatus(session)
 
-                  <th className="hidden px-5 py-3 text-left font-bold md:table-cell">
-                    Événement
-                  </th>
+            return (
+              <article
+                key={session.id}
+                className="group relative overflow-hidden rounded-2xl border border-white/10 bg-[color-mix(in_srgb,var(--color-surface)_88%,transparent)] p-5 shadow-2xl shadow-black/10 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-[#D3DBC4]/35 hover:shadow-[0_22px_55px_rgba(15,37,45,0.28)]"
+              >
+                <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#D3DBC4] via-[#9AA9A1] to-[#4E6670]" />
 
-                  <th className="hidden px-5 py-3 text-left font-bold lg:table-cell">
-                    Horaire
-                  </th>
-
-                  <th className="hidden px-5 py-3 text-left font-bold xl:table-cell">
-                    Salle
-                  </th>
-
-                  <th className="px-5 py-3 text-right font-bold">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-
-              <tbody className="divide-y divide-white/10">
-                {filtered.map((session) => (
-                  <tr
-                    key={session.id}
-                    className="hover:bg-[#243244]"
+                <div className="mb-5 flex items-start justify-between gap-3">
+                  <span
+                    className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-bold ${status.className}`}
                   >
-                    <td className="px-5 py-4">
+                    {status.label}
+                  </span>
+
+                  <span className="inline-flex max-w-[11rem] items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-gray-400">
+                    <MapPinIcon className="h-3.5 w-3.5 shrink-0" />
+                    <span className="truncate">
+                      {session.room || 'Salle non définie'}
+                    </span>
+                  </span>
+                </div>
+
+                <h2 className="line-clamp-2 text-xl font-black leading-snug text-[#F9FAFB] transition group-hover:text-[#D3DBC4]">
+                  {session.title}
+                </h2>
+
+                <p className="mt-3 line-clamp-3 min-h-[4.5rem] text-sm leading-6 text-gray-400">
+                  {session.description ||
+                    'Aucune description pour cette session.'}
+                </p>
+
+                <div className="mt-5 space-y-3 rounded-xl border border-white/10 bg-[#111827]/45 p-4">
+                  <div className="flex items-center gap-3 text-sm text-gray-300">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#D3DBC4]/10 text-[#D3DBC4]">
+                      <CalendarDaysIcon className="h-4 w-4" />
+                    </div>
+
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                        Événement
+                      </p>
+                      <p className="line-clamp-1 font-semibold text-[#F9FAFB]">
+                        {session.event?.title || 'Non rattachée'}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3 text-sm text-gray-300">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#D3DBC4]/10 text-[#D3DBC4]">
+                      <ClockIcon className="h-4 w-4" />
+                    </div>
+
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                        Horaire
+                      </p>
                       <p className="font-semibold text-[#F9FAFB]">
-                        {session.title}
+                        {formatDate(session.startTime)} ·{' '}
+                        {formatTime(session.startTime)} -{' '}
+                        {formatTime(session.endTime)}
                       </p>
+                    </div>
+                  </div>
+                </div>
 
-                      <p className="mt-1 line-clamp-1 text-xs text-gray-400">
-                        {session.description}
-                      </p>
-                    </td>
+                <div className="mt-5 flex items-center justify-between gap-3 border-t border-white/10 pt-4">
+                  <Link
+                    href={`/admin/sessions/${session.id}/edit`}
+                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-[#D3DBC4]/25 bg-[#D3DBC4]/10 px-3 py-2.5 text-sm font-bold text-[#D3DBC4] transition hover:-translate-y-0.5 hover:bg-[#D3DBC4]/15"
+                  >
+                    <PencilSquareIcon className="h-4 w-4" />
+                    Modifier
+                  </Link>
 
-                    <td className="hidden px-5 py-4 text-gray-400 md:table-cell">
-                      {session.event?.title || '-'}
-                    </td>
-
-                    <td className="hidden px-5 py-4 text-gray-400 lg:table-cell">
-                      {new Date(
-                        session.startTime
-                      ).toLocaleString('fr-FR', {
-                        dateStyle: 'short',
-                        timeStyle: 'short',
-                      })}
-                    </td>
-
-                    <td className="hidden px-5 py-4 text-gray-400 xl:table-cell">
-                      {session.room}
-                    </td>
-
-                    <td className="px-5 py-4">
-                      <div className="flex justify-end gap-2">
-                        <Link
-                          href={`/admin/sessions/${session.id}/edit`}
-                          className="rounded-md px-3 py-1.5 text-sm font-semibold text-[#10B981] hover:bg-[#10B981]/15"
-                        >
-                          Modifier
-                        </Link>
-
-                        <button
-                          onClick={() =>
-                            handleDelete(
-                              session.id,
-                              session.title
-                            )
-                          }
-                          className="rounded-md px-3 py-1.5 text-sm font-semibold text-red-300 hover:bg-red-500/10"
-                        >
-                          Supprimer
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                  <button
+                    onClick={() =>
+                      handleDelete(session.id, session.title)
+                    }
+                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-red-400/20 px-3 py-2.5 text-sm font-bold text-red-300 transition hover:-translate-y-0.5 hover:bg-red-500/10"
+                  >
+                    <TrashIcon className="h-4 w-4" />
+                    Supprimer
+                  </button>
+                </div>
+              </article>
+            )
+          })}
         </div>
       )}
     </div>

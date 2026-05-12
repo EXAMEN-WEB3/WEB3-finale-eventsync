@@ -6,12 +6,33 @@ import {
   BuildingOfficeIcon,
   CalendarDaysIcon,
   ChartBarIcon,
+  ClockIcon,
+  MapPinIcon,
   PlayCircleIcon,
   PlusIcon,
   UserGroupIcon,
 } from '@heroicons/react/24/outline'
 import { authOptions } from '@/lib/authOptions'
 import { prisma } from '@/lib/prisma'
+
+function formatDay(value) {
+  return new Date(value).toLocaleDateString('fr-FR', {
+    day: '2-digit',
+  })
+}
+
+function formatMonth(value) {
+  return new Date(value).toLocaleDateString('fr-FR', {
+    month: 'short',
+  })
+}
+
+function formatTime(value) {
+  return new Date(value).toLocaleTimeString('fr-FR', {
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+}
 
 export default async function AdminDashboard() {
   const session = await getServerSession(authOptions)
@@ -34,6 +55,11 @@ export default async function AdminDashboard() {
     }),
     prisma.session.findMany({
       take: 5,
+      where: {
+        startTime: {
+          gte: new Date(),
+        },
+      },
       orderBy: { startTime: 'asc' },
       include: { event: true },
     }),
@@ -173,48 +199,80 @@ export default async function AdminDashboard() {
           </div>
         </div>
 
-        <div className="rounded-lg border border-white/10 bg-[#1F2937] p-6 shadow-sm">
-          <div className="mb-4 flex items-center justify-between gap-4">
-            <h2 className="text-sm font-bold uppercase tracking-wide text-gray-400">
-              Prochaines sessions
-            </h2>
+        <div className="overflow-hidden rounded-2xl border border-white/10 bg-[color-mix(in_srgb,var(--color-surface)_88%,transparent)] shadow-2xl shadow-black/10 backdrop-blur-xl">
+          <div className="border-b border-white/10 bg-white/5 px-6 py-5">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <p className="text-sm font-bold uppercase tracking-wide text-gray-400">
+                  Agenda
+                </p>
 
-            <Link
-              href="/admin/sessions"
-              className="text-sm font-semibold text-gray-400 hover:text-[#F9FAFB]"
-            >
-              Voir tout
-            </Link>
+                <h2 className="mt-1 flex items-center gap-2 text-xl font-black text-[#F9FAFB]">
+                  <PlayCircleIcon className="h-5 w-5 text-[#D3DBC4]" />
+                  Prochaines sessions
+                </h2>
+              </div>
+
+              <Link
+                href="/admin/sessions"
+                className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-sm font-bold text-gray-300 transition hover:-translate-y-0.5 hover:border-[#D3DBC4]/35 hover:bg-[#D3DBC4]/10 hover:text-[#D3DBC4]"
+              >
+                Voir tout
+                <ArrowRightIcon className="h-4 w-4" />
+              </Link>
+            </div>
           </div>
 
-          <div className="divide-y divide-white/10">
+          <div className="space-y-3 p-5">
             {upcomingSessions.length === 0 ? (
-              <p className="py-6 text-sm text-gray-400">
-                Aucune session planifiée.
-              </p>
+              <div className="rounded-xl border border-dashed border-white/15 bg-[#111827]/35 px-5 py-8 text-center">
+                <CalendarDaysIcon className="mx-auto mb-3 h-10 w-10 text-gray-400" />
+                <p className="font-semibold text-[#F9FAFB]">
+                  Aucune session à venir
+                </p>
+                <p className="mt-1 text-sm text-gray-400">
+                  Les prochaines sessions apparaîtront ici dès qu’elles seront planifiées.
+                </p>
+              </div>
             ) : (
               upcomingSessions.map((item) => (
                 <Link
                   key={item.id}
                   href={`/admin/sessions/${item.id}/edit`}
-                  className="flex items-center justify-between gap-4 py-3 hover:bg-[#243244]"
+                  className="group flex items-center gap-4 rounded-xl border border-white/10 bg-[#111827]/40 p-4 transition hover:-translate-y-0.5 hover:border-[#D3DBC4]/30 hover:bg-[#243244]/70"
                 >
-                  <div className="min-w-0">
-                    <p className="truncate font-semibold text-[#F9FAFB]">
+                  <div className="flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded-xl border border-[#D3DBC4]/20 bg-[#D3DBC4]/10 text-[#D3DBC4]">
+                    <span className="text-lg font-black leading-none">
+                      {formatDay(item.startTime)}
+                    </span>
+                    <span className="mt-1 text-[10px] font-bold uppercase">
+                      {formatMonth(item.startTime)}
+                    </span>
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-xs font-bold uppercase tracking-wide text-gray-500">
+                      {item.event?.title || 'Sans événement'}
+                    </p>
+
+                    <p className="mt-1 truncate font-bold text-[#F9FAFB] group-hover:text-[#D3DBC4]">
                       {item.title}
                     </p>
 
-                    <p className="truncate text-sm text-gray-400">
-                      {item.event?.title || 'Sans événement'} · {item.room}
-                    </p>
+                    <div className="mt-2 flex flex-wrap gap-3 text-xs font-semibold text-gray-400">
+                      <span className="inline-flex items-center gap-1">
+                        <ClockIcon className="h-3.5 w-3.5" />
+                        {formatTime(item.startTime)}
+                      </span>
+
+                      <span className="inline-flex items-center gap-1">
+                        <MapPinIcon className="h-3.5 w-3.5" />
+                        {item.room || 'Salle non définie'}
+                      </span>
+                    </div>
                   </div>
 
-                  <p className="shrink-0 text-sm font-medium text-gray-400">
-                    {new Date(item.startTime).toLocaleString('fr-FR', {
-                      dateStyle: 'short',
-                      timeStyle: 'short',
-                    })}
-                  </p>
+                  <ArrowRightIcon className="h-4 w-4 shrink-0 text-gray-500 transition group-hover:translate-x-1 group-hover:text-[#D3DBC4]" />
                 </Link>
               ))
             )}

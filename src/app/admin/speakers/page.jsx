@@ -3,7 +3,14 @@
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
-import { MagnifyingGlassIcon, PlusIcon, UserGroupIcon } from '@heroicons/react/24/outline'
+import {
+  IdentificationIcon,
+  MagnifyingGlassIcon,
+  PencilSquareIcon,
+  PlusIcon,
+  TrashIcon,
+  UserGroupIcon,
+} from '@heroicons/react/24/outline'
 import { LoadingSpinner, SpeakerAvatar } from '@/components/ui'
 
 export default function AdminSpeakersPage() {
@@ -25,13 +32,13 @@ export default function AdminSpeakersPage() {
   }, [])
 
   const handleDelete = async (id, name) => {
-    if (!confirm(`Supprimer dÃ©finitivement "${name}" ?`)) return
+    if (!confirm(`Supprimer définitivement "${name}" ?`)) return
     const toastId = toast.loading('Suppression...')
     const res = await fetch(`/api/admin/speakers/${id}`, { method: 'DELETE', credentials: 'include' })
 
     if (res.ok) {
       setSpeakers((prev) => prev.filter((speaker) => speaker.id !== id))
-      toast.success('Intervenant supprimÃ©', { id: toastId })
+      toast.success('Intervenant supprimé', { id: toastId })
     } else {
       toast.error('Erreur lors de la suppression', { id: toastId })
     }
@@ -84,28 +91,58 @@ export default function AdminSpeakersPage() {
         </div>
       ) : filtered.length === 0 ? (
         <div className="rounded-lg border border-white/10 bg-[#1F2937] p-12 text-center text-gray-400 shadow-sm">
-          {search ? 'Aucun intervenant ne correspond Ã  cette recherche.' : 'Aucun intervenant.'}
+          {search ? 'Aucun intervenant ne correspond à cette recherche.' : 'Aucun intervenant.'}
         </div>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {filtered.map((speaker) => (
-            <div key={speaker.id} className="rounded-lg border border-white/10 bg-[#1F2937] p-5 shadow-sm hover:shadow-md">
+            <article
+              key={speaker.id}
+              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-[color-mix(in_srgb,var(--color-surface)_88%,transparent)] p-5 shadow-2xl shadow-black/10 backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-[#D3DBC4]/35 hover:shadow-[0_22px_55px_rgba(15,37,45,0.28)]"
+            >
+              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#D3DBC4] via-[#9AA9A1] to-[#4E6670]" />
+
               <div className="flex items-start gap-4">
-                <SpeakerAvatar name={speaker.name} photoUrl={speaker.photoUrl} size="md" />
-                <div className="min-w-0 flex-1">
-                  <h2 className="truncate font-bold text-[#F9FAFB]">{speaker.name}</h2>
-                  <p className="mt-1 line-clamp-3 text-sm leading-6 text-gray-400">{speaker.bio || 'Aucune biographie renseignÃ©e.'}</p>
+                <div className="rounded-2xl border border-[#D3DBC4]/20 bg-[#D3DBC4]/10 p-1">
+                  <SpeakerAvatar name={speaker.name} photoUrl={speaker.photoUrl} size="md" />
+                </div>
+
+                <div className="min-w-0 flex-1 pt-1">
+                  <span className="mb-2 inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-bold text-gray-400">
+                    <IdentificationIcon className="h-3.5 w-3.5" />
+                    Intervenant
+                  </span>
+
+                  <h2 className="truncate text-xl font-black text-[#F9FAFB] transition group-hover:text-[#D3DBC4]">
+                    {speaker.name}
+                  </h2>
                 </div>
               </div>
-              <div className="mt-5 flex justify-end gap-2 border-t border-white/10 pt-4">
-                <Link href={`/admin/speakers/${speaker.id}/edit`} className="rounded-md px-3 py-1.5 text-sm font-semibold text-[#10B981] hover:bg-[#10B981]/15">
+
+              <div className="mt-5 min-h-[7rem] rounded-xl border border-white/10 bg-[#111827]/45 p-4">
+                <p className="line-clamp-4 text-sm leading-6 text-gray-400">
+                  {speaker.bio || 'Aucune biographie renseignée.'}
+                </p>
+              </div>
+
+              <div className="mt-5 flex justify-end gap-3 border-t border-white/10 pt-4">
+                <Link
+                  href={`/admin/speakers/${speaker.id}/edit`}
+                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-[#D3DBC4]/25 bg-[#D3DBC4]/10 px-3 py-2.5 text-sm font-bold text-[#D3DBC4] transition hover:-translate-y-0.5 hover:bg-[#D3DBC4]/15"
+                >
+                  <PencilSquareIcon className="h-4 w-4" />
                   Modifier
                 </Link>
-                <button onClick={() => handleDelete(speaker.id, speaker.name)} className="rounded-md px-3 py-1.5 text-sm font-semibold text-red-300 hover:bg-red-500/10">
+
+                <button
+                  onClick={() => handleDelete(speaker.id, speaker.name)}
+                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-red-400/20 px-3 py-2.5 text-sm font-bold text-red-300 transition hover:-translate-y-0.5 hover:bg-red-500/10"
+                >
+                  <TrashIcon className="h-4 w-4" />
                   Supprimer
                 </button>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       )}
