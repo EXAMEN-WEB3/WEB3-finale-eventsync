@@ -4,7 +4,7 @@ export default function AdminLayout({ children }) {
   return (
     <div className="min-h-screen bg-[#111827] text-[#F9FAFB]">
       <AdminSidebar />
-      <main className="min-h-screen lg:ml-64">
+      <main className="min-h-screen transition-[margin] duration-150 lg:ml-[var(--admin-sidebar-width,16rem)]">
         <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
           {children}
         </div>
