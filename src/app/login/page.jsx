@@ -85,18 +85,18 @@ export default function LoginPage() {
   }
 
   return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-emerald-600 to-emerald-800 px-4 py-12">
-        <div className="w-full max-w-md">
+      <div className="login-shell flex min-h-screen items-center justify-center px-4 py-12">
+        <div className="w-full max-w-md animate-fade-up">
           {/* Header */}
           <div className="mb-8 flex justify-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 text-sm font-black uppercase tracking-wide text-[#F4D9EC]">
-              <SparklesIcon className="h-4 w-4 text-[#C084B5]" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm font-black uppercase tracking-wide text-[var(--color-foreground)] shadow-2xl backdrop-blur-md">
+              <SparklesIcon className="h-4 w-4 text-[var(--color-primary)]" />
               <span className="text-3xl">Event Access</span>
             </div>
           </div>
 
           {/* Card */}
-          <div className="overflow-hidden rounded-2xl bg-[#1F2937] shadow-2xl">
+          <div className="overflow-hidden rounded-2xl border border-white/15 bg-[color-mix(in_srgb,var(--color-surface)_88%,transparent)] shadow-2xl backdrop-blur-xl">
             {/* Onglets */}
             <div className="flex border-b border-white/10">
               <button
