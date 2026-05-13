@@ -22,7 +22,7 @@ export async function POST(req) {
         room,
         capacity: capacity ? parseInt(capacity) : null,
         eventId,
-        // BUG FIX: speakerIds peut Ãªtre undefined si non sÃ©lectionnÃ©
+        
         speakers: { connect: (speakerIds || []).map(id => ({ id })) },
       },
     })

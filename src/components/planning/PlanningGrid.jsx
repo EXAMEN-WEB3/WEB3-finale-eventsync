@@ -49,7 +49,7 @@ export default function PlanningGrid({ sessions }) {
 
   return (
     <>
-      {/* Vue tableau (desktop) */}
+      
       <div className="hidden md:block overflow-x-auto shadow-sm rounded-xl border border-white/10">
         <table className="min-w-full bg-[#1F2937] text-sm">
           <thead className="bg-[#111827] text-gray-400">
@@ -113,7 +113,7 @@ export default function PlanningGrid({ sessions }) {
         </table>
       </div>
 
-      {/* Vue cartes (mobile) */}
+      
       <div className="md:hidden space-y-3">
         {sessions.map(session => {
           const isLive = liveMap[session.id] || false

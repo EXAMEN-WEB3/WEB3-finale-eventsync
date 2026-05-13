@@ -20,7 +20,6 @@ import { useParticipant } from '@/context/AuthContext'
 import { useTheme } from '@/context/ThemeContext'
 import ProfilePhotoButton from '@/components/ProfilePhotoButton'
 
-
 export default function PublicNavbar() {
   const pathname = usePathname()
   const router = useRouter()
@@ -70,7 +69,7 @@ export default function PublicNavbar() {
   return (
       <header className="sticky top-0 z-50 border-b border-white/10 bg-[#111827]/95 backdrop-blur">
       <nav className="container relative mx-auto flex items-center justify-between px-4 py-4">
-        {/* Logo */}
+        
         <Link
           href="/"
           className="relative z-10 flex items-center gap-3 text-white transition hover:opacity-90"
@@ -90,7 +89,7 @@ export default function PublicNavbar() {
           </div>
         </Link>
 
-        {/* Desktop centered navigation */}
+        
         <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-2 md:flex">
           {navigation.map((item) => {
             const active = pathname === item.href
@@ -113,7 +112,7 @@ export default function PublicNavbar() {
           })}
         </div>
 
-        {/* Desktop actions */}
+        
         <div className="relative z-10 hidden items-center gap-2 md:flex">
           <button
             type="button"
@@ -175,7 +174,7 @@ export default function PublicNavbar() {
           )}
         </div>
 
-        {/* Mobile button */}
+        
         <button
           onClick={() =>
             setMobileOpen(!mobileOpen)
@@ -190,7 +189,7 @@ export default function PublicNavbar() {
         </button>
       </nav>
 
-      {/* Mobile menu */}
+      
       {mobileOpen && (
         <div className="border-t border-white/10 bg-[#111827] md:hidden">
           <div className="container mx-auto flex flex-col gap-1 px-4 py-4">

@@ -11,11 +11,8 @@ import {
   UserIcon,
 } from '@heroicons/react/24/outline'
 
-/**
- * Page de connexion unifiée.
- * Onglet Admin : via NextAuth (credentials)
- * Onglet Participant : pseudo + session localStorage
- */
+
+
 export default function LoginPage() {
   const [tab, setTab] = useState('participant')
 
@@ -23,7 +20,7 @@ export default function LoginPage() {
 
   const { loginParticipant } = useParticipant()
 
-  // --- Formulaire admin ---
+  
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [adminError, setAdminError] = useState('')
@@ -59,7 +56,7 @@ export default function LoginPage() {
     }
   }
 
-  // --- Formulaire participant ---
+  
   const [pseudo, setPseudo] = useState('')
   const [pseudoError, setPseudoError] =
       useState('')
@@ -87,7 +84,7 @@ export default function LoginPage() {
   return (
       <div className="login-shell flex min-h-screen items-center justify-center px-4 py-12">
         <div className="w-full max-w-md animate-fade-up">
-          {/* Header */}
+          
           <div className="mb-8 flex justify-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm font-black uppercase tracking-wide text-[var(--color-foreground)] shadow-2xl backdrop-blur-md">
               <SparklesIcon className="h-4 w-4 text-[var(--color-primary)]" />
@@ -95,9 +92,9 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* Card */}
+          
           <div className="overflow-hidden rounded-2xl border border-white/15 bg-[color-mix(in_srgb,var(--color-surface)_88%,transparent)] shadow-2xl backdrop-blur-xl">
-            {/* Onglets */}
+            
             <div className="flex border-b border-white/10">
               <button
                   onClick={() =>
@@ -127,7 +124,7 @@ export default function LoginPage() {
             </div>
 
             <div className="p-8">
-              {/* === Onglet Participant === */}
+              
               {tab === 'participant' && (
                   <form
                       onSubmit={
@@ -197,7 +194,7 @@ export default function LoginPage() {
                   </form>
               )}
 
-              {/* === Onglet Admin === */}
+              
               {tab === 'admin' && (
                   <form
                       onSubmit={handleAdminLogin}

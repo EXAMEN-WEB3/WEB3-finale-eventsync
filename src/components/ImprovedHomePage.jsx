@@ -8,14 +8,14 @@ export default async function ImprovedHomePage() {
     include: {
       sessions: {
         select: { id: true },
-        take: 1 // Just to check if there are sessions
+        take: 1 
       }
     }
   })
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      {/* Hero Section */}
+      
       <section className="relative overflow-hidden bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative container mx-auto px-4 py-20">
@@ -45,7 +45,7 @@ export default async function ImprovedHomePage() {
         </div>
       </section>
 
-      {/* Events Section */}
+      
       <section id="events" className="py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
@@ -129,7 +129,7 @@ export default async function ImprovedHomePage() {
         </div>
       </section>
 
-      {/* Footer */}
+      
       <footer className="bg-gray-900 text-white py-8">
         <div className="container mx-auto px-4 text-center">
           <p className="text-gray-400">

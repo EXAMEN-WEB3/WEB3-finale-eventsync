@@ -35,14 +35,14 @@ export default function ImprovedPublicNavbar() {
   const { participant, logoutParticipant, loaded } = useParticipant()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  // Ne pas afficher la navbar publique sur les pages admin
+  
   if (pathname?.startsWith('/admin')) return null
 
   return (
     <nav className="bg-gradient-to-r from-gray-900 to-gray-800 text-white shadow-lg sticky top-0 z-30 border-b border-gray-700">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+          
           <Link
             href="/"
             className="flex items-center gap-2 font-bold text-xl tracking-tight text-white hover:text-blue-400 transition-colors"
@@ -53,7 +53,7 @@ export default function ImprovedPublicNavbar() {
             EventSync
           </Link>
 
-          {/* Desktop Navigation */}
+          
           <div className="hidden md:flex items-center gap-2">
             <NavLink
               href="/"
@@ -69,7 +69,7 @@ export default function ImprovedPublicNavbar() {
             />
           </div>
 
-          {/* Auth Section */}
+          
           <div className="flex items-center gap-3">
             {loaded && participant ? (
               <div className="hidden sm:flex items-center gap-3">
@@ -94,7 +94,7 @@ export default function ImprovedPublicNavbar() {
               </Link>
             )}
 
-            {/* Mobile Menu Button */}
+            
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden p-2 rounded-lg hover:bg-gray-800 transition-colors"
@@ -108,7 +108,7 @@ export default function ImprovedPublicNavbar() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        
         {isMenuOpen && (
           <div className="md:hidden border-t border-gray-700 py-4">
             <div className="flex flex-col gap-2">

@@ -1,8 +1,8 @@
 ﻿import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
-// BUG FIX: Ce fichier Ã©tait nommÃ© page.jsx au lieu de route.js, et placÃ© dans /api/events/[id]/edit/
-// au lieu de /api/events/[id]/. CorrigÃ© et dÃ©placÃ© au bon endroit.
+
+
 export async function GET(req, { params }) {
   const { id } = await params
   const event = await prisma.event.findUnique({ where: { id } })

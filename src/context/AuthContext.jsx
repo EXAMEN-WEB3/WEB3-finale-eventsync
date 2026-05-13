@@ -11,7 +11,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     try {
-      // Nettoie l'ancienne session persistante qui laissait explorer sans vraie reconnexion.
+      
       localStorage.removeItem('participant')
 
       const stored = sessionStorage.getItem(PARTICIPANT_SESSION_KEY)

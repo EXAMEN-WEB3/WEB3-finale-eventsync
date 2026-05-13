@@ -6,8 +6,8 @@ export async function GET(req) {
     const { searchParams } = new URL(req.url)
     const ids = searchParams.get('ids')
 
-    // BUG FIX: La page /favourites appelle /api/sessions?ids=... mais cette route n'existait pas.
-    // Elle appelait /api/events. Ajout du support du paramÃ¨tre ids.
+    
+    
     const events = await prisma.event.findMany({
       ...(ids ? { where: { id: { in: ids.split(',') } } } : {}),
       orderBy: { startDate: 'desc' },

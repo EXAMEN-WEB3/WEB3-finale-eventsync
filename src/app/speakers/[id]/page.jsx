@@ -17,12 +17,12 @@ export default async function SpeakerPage({ params }) {
   })
   if (!speaker) notFound()
 
-  // links est de type Json dans Prisma â€” dÃ©jÃ  un objet JS
+  
   const links = (speaker.links && typeof speaker.links === 'string')
     ? JSON.parse(speaker.links)
     : (speaker.links || {})
 
-  // Questions posÃ©es lors des sessions de cet intervenant
+  
   const allQuestions = await prisma.question.findMany({
     where: {
       session: {
@@ -35,7 +35,7 @@ export default async function SpeakerPage({ params }) {
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 container mx-auto px-4 py-8 max-w-3xl">
-      {/* En-tÃªte intervenant */}
+      
       <div className="bg-[#111827] rounded-xl shadow-lg border border-gray-700 p-6 mb-8 flex gap-6 items-start">
         <SpeakerAvatar name={speaker.name} photoUrl={speaker.photoUrl} size="lg" />
         <div className="min-w-0">
@@ -66,7 +66,7 @@ export default async function SpeakerPage({ params }) {
         </div>
       </div>
 
-      {/* Sessions animÃ©es */}
+      
       <section className="mb-8">
         <h2 className="text-xl font-bold text-white mb-4">Sessions animÃ©es</h2>
         {speaker.sessions.length === 0 ? (
@@ -90,7 +90,7 @@ export default async function SpeakerPage({ params }) {
         )}
       </section>
 
-      {/* Questions posÃ©es */}
+      
       {allQuestions.length > 0 && (
         <section>
           <h2 className="text-xl font-bold text-white mb-4">Questions posÃ©es sur ses sessions</h2>

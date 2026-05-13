@@ -1,8 +1,7 @@
-﻿// Composants UI partagÃ©s pour Ã©viter la duplication de code
+﻿
 
-/**
- * Indicateur de chargement (spinner).
- */
+
+
 export function LoadingSpinner({ message = 'Chargement...' }) {
   return (
     <div className="flex items-center justify-center gap-3 py-12 text-gray-400">
@@ -20,9 +19,8 @@ export function LoadingSpinner({ message = 'Chargement...' }) {
   )
 }
 
-/**
- * Message d'erreur standardisÃ©.
- */
+
+
 export function ErrorMessage({ message }) {
   if (!message) return null
   return (
@@ -35,9 +33,8 @@ export function ErrorMessage({ message }) {
   )
 }
 
-/**
- * Avatar intervenant avec fallback si photoUrl est vide.
- */
+
+
 export function SpeakerAvatar({ name, photoUrl, size = 'md' }) {
   const sizes = {
     sm: 'w-8 h-8 text-sm',
@@ -71,9 +68,8 @@ export function SpeakerAvatar({ name, photoUrl, size = 'md' }) {
   )
 }
 
-/**
- * Badge LIVE animÃ©.
- */
+
+
 export function LiveBadge() {
   return (
     <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-red-500/10 text-red-300 border border-red-400/30">

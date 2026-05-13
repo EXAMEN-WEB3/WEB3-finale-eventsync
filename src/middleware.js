@@ -3,7 +3,7 @@ import { NextResponse } from "next/server"
 
 export default withAuth(
   function middleware(req) {
-    // Redirige /admin/login vers /login (page unifiée)
+    
     if (req.nextUrl.pathname === '/admin/login') {
       return NextResponse.redirect(new URL('/login', req.url))
     }

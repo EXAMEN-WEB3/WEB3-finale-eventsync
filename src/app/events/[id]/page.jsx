@@ -42,7 +42,7 @@ export default async function EventPage({
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800">
       <div className="container mx-auto px-4 py-8">
-        {/* En-tête */}
+        
         <div className="mb-8 rounded-xl border border-gray-700 bg-[#111827] p-6 shadow-lg">
           <h1 className="mb-3 text-4xl font-bold text-white">
             {event.title}
@@ -70,7 +70,7 @@ export default async function EventPage({
           </div>
         </div>
 
-        {/* Planning multi-track */}
+        
         <div className="rounded-xl border border-gray-700 bg-[#111827] p-6 shadow-lg">
           <h2 className="mb-4 text-2xl font-bold text-white">
             Planning des sessions

@@ -38,7 +38,7 @@ export default function QuestionSection({
 
   const voteStorageKey = `userUpvotes:${voterKey}`
 
-  // Recalcul isLive côté client toutes les 10 s
+  
   const [isLive, setIsLive] = useState(isLiveInitial)
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export default function QuestionSection({
     return () => clearInterval(interval)
   }, [startTime, endTime])
 
-  // Charger les votes localStorage pour l'identité courante.
+  
   useEffect(() => {
     try {
       const stored = localStorage.getItem(voteStorageKey)
@@ -73,7 +73,7 @@ export default function QuestionSection({
     } catch {}
   }, [voteStorageKey])
 
-  // Charger les questions — toujours visible (public)
+  
   const fetchQuestions = useCallback(async () => {
     try {
       const res = await fetch(
@@ -101,7 +101,7 @@ export default function QuestionSection({
     return () => clearInterval(interval)
   }, [sessionId, isLive, fetchQuestions])
 
-  // Upvote — un vote par question et par identité locale
+  
   const handleUpvote = async (questionId) => {
     if (userVotes.has(questionId)) return
 
@@ -137,7 +137,7 @@ export default function QuestionSection({
     }
   }
 
-  // Soumission question — participant connecté uniquement
+  
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -213,7 +213,7 @@ export default function QuestionSection({
     }
   }
 
-  // Attendons que le contexte soit chargé
+  
   if (!loaded) return null
 
   return (
@@ -222,11 +222,11 @@ export default function QuestionSection({
         ❓ Questions
       </h3>
 
-      {/* ═══ ZONE FORMULAIRE ═══ */}
+      
       {isLive ? (
         <>
           {participant ? (
-            /* ✅ Participant connecté — formulaire actif */
+            
             <form
               onSubmit={handleSubmit}
               className="mb-6 space-y-3 rounded-xl border border-emerald-500/30 bg-[#10B981]/10 p-4"
@@ -285,7 +285,7 @@ export default function QuestionSection({
               </button>
             </form>
           ) : (
-            /* 🔒 Visiteur non connecté */
+            
             <div className="mb-6 rounded-xl border border-emerald-500/20 bg-[#111827] p-5">
               <div className="flex items-start gap-4">
                 <div className="shrink-0 rounded-full bg-emerald-500/10 p-2.5">
@@ -320,7 +320,7 @@ export default function QuestionSection({
                 </div>
               </div>
 
-              {/* Note : l'upvote reste accessible aux visiteurs */}
+              
               <p className="mt-4 border-t border-white/5 pt-3 text-xs text-gray-500">
                 💡 Vous pouvez quand même voter
                 pour les questions existantes sans
@@ -330,7 +330,6 @@ export default function QuestionSection({
           )}
         </>
       ) : (
-        /* Session non live */
         <div className="mb-6 rounded-xl border border-white/10 bg-[#111827] p-4">
           <p className="text-sm text-gray-400">
             ⏳ Les questions sont ouvertes
@@ -340,7 +339,7 @@ export default function QuestionSection({
         </div>
       )}
 
-      {/* ═══ LISTE DES QUESTIONS ═══ */}
+      
       {questions.length === 0 ? (
         <p className="rounded-xl border border-dashed border-white/10 py-6 text-center text-sm text-gray-500">
           Aucune question pour le moment.
@@ -365,7 +364,7 @@ export default function QuestionSection({
                   </span>
                 </div>
 
-                {/* Upvote accessible à tous */}
+                
                 <button
                   onClick={() =>
                     handleUpvote(q.id)

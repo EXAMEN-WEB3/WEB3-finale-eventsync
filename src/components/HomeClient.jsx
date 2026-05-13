@@ -17,7 +17,7 @@ export default function HomeClient({ events }) {
   const [search, setSearch] = useState('')
   const [welcomed, setWelcomed] = useState(false)
 
-  // Toast de bienvenue une fois par session participant
+  
   useEffect(() => {
     if (loaded && participant && !welcomed) {
       const key = `welcomed_${participant.userId}`
@@ -52,7 +52,7 @@ export default function HomeClient({ events }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      {/* Hero */}
+      
       <section className="bg-gradient-to-r from-emerald-700 to-emerald-800 px-4 py-16 text-center text-white">
         <h1 className="mb-3 text-5xl font-extrabold">
           EventSync
@@ -63,7 +63,7 @@ export default function HomeClient({ events }) {
           en direct
         </p>
 
-        {/* Barre de recherche dans le hero */}
+        
         <div className="relative mx-auto max-w-lg">
           <MagnifyingGlassIcon className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
 
@@ -77,7 +77,7 @@ export default function HomeClient({ events }) {
         </div>
       </section>
 
-      {/* Liste des événements */}
+      
       <main className="container mx-auto px-4 py-12">
         <div className="mb-8 flex items-center justify-between">
           <h2 className="flex items-center gap-2 text-3xl font-bold text-[#111827]">

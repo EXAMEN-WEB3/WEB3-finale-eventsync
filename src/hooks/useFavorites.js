@@ -4,12 +4,12 @@ export function useFavorites() {
   const [favorites, setFavorites] = useState([])
 
   useEffect(() => {
-    // BUG FIX: Vérification que localStorage est disponible (évite erreur SSR)
+    
     try {
       const stored = localStorage.getItem('favorites')
       if (stored) setFavorites(JSON.parse(stored))
     } catch {
-      // localStorage indisponible (SSR ou mode privé)
+      
     }
   }, [])
 

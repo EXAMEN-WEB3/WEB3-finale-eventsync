@@ -50,7 +50,7 @@ model Question {
   id            String    @id @default(cuid())
   content       String
   authorName    String?
-  participantId String?   // userId localStorage du participant (optionnel, rétrocompatible)
+  participantId String?
   upvotes       Int       @default(0)
   sessionId     String
   session       Session   @relation(fields: [sessionId], references: [id], onDelete: Cascade)

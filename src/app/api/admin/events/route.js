@@ -10,7 +10,7 @@ export async function POST(req) {
   }
   try {
     const { title, description, startDate, endDate, location } = await req.json()
-    // BUG FIX: Validation des champs obligatoires
+    
     if (!title || !startDate || !endDate || !location) {
       return NextResponse.json({ error: 'Champs manquants' }, { status: 400 })
     }
