@@ -70,7 +70,7 @@ export default function PersonalPlanningPage() {
   )
 
   return (
-    <main className="top-22 min-h-screen bg-[#111827] text-[#F9FAFB]">
+    <main className="p-25 min-h-screen bg-[#111827] text-[#F9FAFB]">
       <section className="border-b border-white/10 bg-[#1F2937]">
         <div className="container mx-auto px-4 py-10">
           <p className="text-sm font-semibold uppercase tracking-widest text-[#10B981]">
