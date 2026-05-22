@@ -67,7 +67,7 @@ export default function PublicNavbar() {
   const authLoaded = loaded && adminStatus !== 'loading'
 
   return (
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#111827]/95 backdrop-blur">
+      <header className="fixed w-385 top-0 z-50 border-b border-white/10 bg-[#111827]/95 backdrop-blur">
       <nav className="container relative mx-auto flex items-center justify-between px-4 py-4">
         
         <Link
