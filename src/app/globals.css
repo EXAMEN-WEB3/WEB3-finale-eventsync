@@ -7,7 +7,7 @@
   --color-secondary-strong: #1D3B45;
   --color-primary-soft: rgba(211, 219, 196, 0.14);
   --color-secondary-soft: rgba(78, 102, 112, 0.18);
-  --color-background: #0F252D;
+  --color-background: rgba(29, 142, 0, 0.17);
   --color-surface: #17323B;
   --color-surface-soft: #213F49;
   --color-foreground: #F3F3F1;
@@ -24,7 +24,7 @@ html[data-theme='light'] {
   --color-secondary-strong: #2E4D58;
   --color-primary-soft: rgba(29, 59, 69, 0.13);
   --color-secondary-soft: rgba(154, 169, 161, 0.22);
-  --color-background: #E2E8E1;
+  --color-background: #9ad3ab;
   --color-surface: #F4F5F0;
   --color-surface-soft: #CBD6C8;
   --color-foreground: #0C222A;
