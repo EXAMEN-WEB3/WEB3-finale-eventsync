@@ -41,7 +41,7 @@ export default async function HomePage() {
   )
 
   return (
-    <main className="min-h-screen bg-[#111827] text-[#F9FAFB]">
+    <main className="p-25 min-h-screen bg-[#111827] text-[#F9FAFB] ">
       <section className="border-b border-white/10 bg-[#1F2937]">
         <div className="container mx-auto grid gap-10 px-4 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:py-20">
           <div>

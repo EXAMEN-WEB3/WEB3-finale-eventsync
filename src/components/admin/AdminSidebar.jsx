@@ -55,19 +55,7 @@ export default function AdminSidebar() {
   }
 
   return (
-      <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-white/10 bg-[#1F2937] shadow-sm lg:flex">
-        <div className="border-b border-white/10 px-5 py-5">
-          <Link href="/admin/dashboard" className="flex items-center gap-3 text-[#F9FAFB]">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#10B981] text-white shadow-glow">
-              <SparklesIcon className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-lg font-black tracking-tight">EventSync</p>
-              <p className="text-xs font-medium text-gray-400">Administration</p>
-            </div>
-          </Link>
-        </div>
-
+      <aside className="fixed inset-y-0 left-0 top-22 z-40 hidden w-64 flex-col border-r border-white/10 bg-[#1F2937] shadow-sm lg:flex">
         <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
           {navItems.map(({ href, label, icon: Icon }) => {
             const isActive = pathname === href || pathname.startsWith(`${href}/`)
