@@ -3,6 +3,9 @@ import { NextResponse } from "next/server"
 
 export default withAuth(
   function middleware(req) {
+    if (req.nextUrl.pathname === '/admin/login') {
+      return NextResponse.redirect(new URL('/login', req.url))
+    }
     return NextResponse.next()
   },
   {
@@ -10,4 +13,4 @@ export default withAuth(
   }
 )
 
-export const config = { matcher: ["/admin/((?!login).*)"] }
+export const config = { matcher: ["/admin/:path*"] }
