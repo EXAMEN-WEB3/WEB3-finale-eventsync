@@ -1,0 +1,21 @@
+﻿﻿import './globals.css'
+import Providers from '../components/Providers'
+import PublicNavbar from '../components/PublicNavbar'
+
+export const metadata = {
+    title: 'EventSync',
+    description: "Gestion d'événements en temps réel",
+}
+
+export default function RootLayout({ children }) {
+    return (
+        <html lang="fr" data-theme="dark" suppressHydrationWarning>
+        <body>
+        <Providers>
+            <PublicNavbar />
+            {children}
+        </Providers>
+        </body>
+        </html>
+    )
+}
