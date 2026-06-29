@@ -1,15 +1,16 @@
 ﻿import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 
-export async function GET(req, { params }) {
+export async function GET() {
   try {
-    const { id } = await params
-    const session = await prisma.session.findUnique({
-      where: { id },
-      include: { speakers: true, event: true },
+    const sessions = await prisma.session.findMany({
+      where: { room: { not: '' } },
+      select: { room: true },
+      distinct: ['room'],
+      orderBy: { room: 'asc' },
     })
-    if (!session) return NextResponse.json({ error: 'Not found' }, { status: 404 })
-    return NextResponse.json(session)
+    const rooms = sessions.map((s) => ({ name: s.room }))
+    return NextResponse.json(rooms)
   } catch (error) {
     console.error(error)
     return NextResponse.json({ error: 'Server error' }, { status: 500 })

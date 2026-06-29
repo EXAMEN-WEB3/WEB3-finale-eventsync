@@ -46,7 +46,7 @@ export default function NewSpeakerPage() {
       },
       body: JSON.stringify({
         ...form,
-        links: parsedLinks,
+        links: Object.keys(parsedLinks).length === 0 ? null : parsedLinks,
       }),
       credentials: 'include',
     })

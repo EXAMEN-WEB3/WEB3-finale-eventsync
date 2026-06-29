@@ -29,6 +29,8 @@ export default function PublicNavbar() {
   const [mobileOpen, setMobileOpen] =
     useState(false)
 
+  if (pathname.startsWith('/admin') || pathname.startsWith('/login')) return null
+
   const navigation = [
     {
       name: 'Accueil',
