@@ -70,8 +70,8 @@ export default function PersonalPlanningPage() {
   )
 
   return (
-    <main className="p-25 min-h-screen bg-[#111827] text-[#F9FAFB]">
-      <section className="border-b border-white/10 bg-[#1F2937]">
+    <main className="min-h-screen bg-[#111827] pt-16 text-[#F9FAFB]">
+      <section className="soft-section border-b border-white/10">
         <div className="container mx-auto px-4 py-10">
           <p className="text-sm font-semibold uppercase tracking-widest text-[#10B981]">
             Programme personnel
@@ -91,7 +91,7 @@ export default function PersonalPlanningPage() {
 
             <Link
               href="/sessions"
-              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#10B981] px-4 py-2 text-sm font-semibold text-white shadow-glow hover:bg-emerald-700"
+              className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg bg-[#10B981] px-4 py-2 text-sm font-semibold text-white shadow-glow hover:bg-emerald-700"
             >
               Ajouter des sessions
               <ArrowRightIcon className="h-4 w-4" />
@@ -102,12 +102,12 @@ export default function PersonalPlanningPage() {
 
       <section className="container mx-auto px-4 py-10">
         {loading ? (
-          <div className="rounded-lg border border-white/10 bg-[#1F2937] px-6 py-14 text-center shadow-sm">
+          <div className="card-dark rounded-lg px-6 py-14 text-center">
             <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-2 border-[#10B981] border-t-transparent" />
             <p className="text-gray-400">Chargement de votre planning...</p>
           </div>
         ) : sortedSessions.length === 0 ? (
-          <div className="mx-auto max-w-lg rounded-lg border border-white/10 bg-[#1F2937] px-6 py-14 text-center shadow-sm">
+          <div className="card-dark mx-auto max-w-lg rounded-lg px-6 py-14 text-center">
             <CalendarDaysIcon className="mx-auto mb-4 h-16 w-16 text-gray-400" />
 
             <h2 className="text-2xl font-bold text-[#F9FAFB]">
@@ -129,7 +129,7 @@ export default function PersonalPlanningPage() {
           </div>
         ) : (
           <div className="space-y-5">
-            <div className="rounded-lg border border-white/10 bg-[#1F2937] px-5 py-4 text-sm text-gray-400">
+            <div className="quiet-panel px-1 py-4 text-sm text-gray-400">
               {sortedSessions.length} session
               {sortedSessions.length > 1 ? 's' : ''} dans votre planning
             </div>
@@ -137,7 +137,7 @@ export default function PersonalPlanningPage() {
             {sortedSessions.map((session) => (
               <article
                 key={session.id}
-                className="rounded-lg border border-white/10 bg-[#1F2937] p-6 shadow-sm hover:-translate-y-1 hover:border-[#10B981] hover:shadow-md"
+                className="quiet-panel rounded-lg px-1 py-6 hover:-translate-y-1"
               >
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                   <div>

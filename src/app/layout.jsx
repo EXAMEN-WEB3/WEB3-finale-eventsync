@@ -1,6 +1,6 @@
 ﻿﻿import './globals.css'
 import Providers from '../components/Providers'
-import PublicNavbar from '../components/PublicNavbar'
+import AppChrome from '../components/AppChrome'
 
 export const metadata = {
     title: 'EventSync',
@@ -12,7 +12,7 @@ export default function RootLayout({ children }) {
         <html lang="fr" data-theme="dark" suppressHydrationWarning>
         <body>
         <Providers>
-            <PublicNavbar />
+            <AppChrome />
             {children}
         </Providers>
         </body>

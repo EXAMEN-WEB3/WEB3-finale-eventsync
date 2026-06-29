@@ -26,7 +26,7 @@ const navItems = [
   { href: '/admin/sessions', label: 'Sessions', icon: PlayCircleIcon },
   { href: '/admin/speakers', label: 'Intervenants', icon: UserGroupIcon },
   { href: '/admin/rooms', label: 'Salles', icon: BuildingOfficeIcon },
-  { href: '/admin/ra', label: 'React Admin', icon: BeakerIcon },
+  { href: '/admin/ra', label: 'Admin', icon: BeakerIcon },
 ]
 
 export default function AdminSidebar() {
@@ -57,18 +57,24 @@ export default function AdminSidebar() {
   }
 
   return (
-      <aside className="fixed inset-y-0 left-0 top-22 z-40 hidden w-64 flex-col border-r border-white/10 bg-[#1F2937] shadow-sm lg:flex">
-        <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-4">
+      <aside className="admin-surface fixed inset-y-0 left-0 z-40 hidden w-64 flex-col px-5 lg:flex">
+        <div className="py-7">
+          <p className="text-xs font-semibold uppercase text-gray-400">EventSync</p>
+          <h1 className="mt-1 text-2xl font-black text-[#F9FAFB]">Admin</h1>
+        </div>
+
+        <nav className="flex-1 space-y-1 overflow-y-auto py-2">
           {navItems.map(({ href, label, icon: Icon }) => {
             const isActive = pathname === href || pathname.startsWith(`${href}/`)
             return (
                 <Link
                     key={href}
                     href={href}
-                    className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold transition-all ${
+                    data-active={isActive}
+                    className={`admin-nav-link group relative flex items-center gap-3 px-2 py-3 text-sm font-semibold transition-all ${
                         isActive
-                            ? 'bg-[#10B981] text-white shadow-glow'
-                            : 'text-gray-400 hover:-translate-y-0.5 hover:bg-[#10B981]/10 hover:text-[#10B981]'
+                            ? 'text-[#10B981]'
+                            : 'text-gray-400 hover:translate-x-1 hover:text-[#10B981]'
                     }`}
                 >
                   <Icon className="h-5 w-5 shrink-0" />
@@ -78,14 +84,15 @@ export default function AdminSidebar() {
           })}
         </nav>
 
-        <div className="space-y-2 border-t border-white/10 px-3 py-4">
+        <div className="space-y-1 py-5">
           {adminEmail && (
-              <div className="pb-2">
+              <div className="mb-4 flex items-center gap-3 px-2">
                 <ProfilePhotoButton
-                    name={adminName}
-                    photoUrl={adminPhotoUrl}
-                    onPhotoChange={handleAdminPhotoChange}
-                    caption="Administrateur"
+                  name={adminName}
+                  photoUrl={adminPhotoUrl}
+                  onPhotoChange={handleAdminPhotoChange}
+                  caption="Administrateur"
+                  size="sm"
                 />
               </div>
           )}
@@ -93,7 +100,7 @@ export default function AdminSidebar() {
           <button
               type="button"
               onClick={toggleTheme}
-              className="theme-toggle flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold"
+              className="group flex w-full items-center gap-3 px-2 py-3 text-sm font-semibold text-gray-400 transition hover:translate-x-1 hover:text-[#10B981]"
           >
             {isDark ? (
                 <SunIcon className="h-5 w-5" />
@@ -105,14 +112,14 @@ export default function AdminSidebar() {
 
           <Link
               href="/"
-              className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold text-gray-400 hover:-translate-y-0.5 hover:bg-[#10B981]/10 hover:text-[#10B981]"
+              className="group flex items-center gap-3 px-2 py-3 text-sm font-semibold text-gray-400 transition hover:translate-x-1 hover:text-[#10B981]"
           >
             <ArrowTopRightOnSquareIcon className="h-5 w-5" />
             Site public
           </Link>
           <button
               onClick={() => signOut({ callbackUrl: '/login' })}
-              className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold text-gray-400 hover:-translate-y-0.5 hover:bg-red-500/10 hover:text-red-300"
+              className="flex w-full items-center gap-3 px-2 py-3 text-sm font-semibold text-gray-400 transition hover:translate-x-1 hover:text-red-300"
           >
             <ArrowLeftEndOnRectangleIcon className="h-5 w-5 shrink-0" />
             Déconnexion

@@ -41,15 +41,15 @@ export default async function HomePage() {
   )
 
   return (
-    <main className="p-25 min-h-screen bg-[#111827] text-[#F9FAFB] ">
-      <section className="border-b border-white/10 bg-[#1F2937]">
-        <div className="container mx-auto grid gap-10 px-4 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:py-20">
+    <main className="min-h-screen bg-[#111827] pt-16 text-[#F9FAFB]">
+      <section className="soft-section border-b border-white/10">
+        <div className="container mx-auto grid gap-10 px-4 py-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:py-18">
           <div>
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#10B981]/30 bg-[#10B981]/15 px-4 py-2 text-sm font-semibold text-[#10B981]">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-lg border border-[#10B981]/30 bg-[#10B981]/12 px-4 py-2 text-sm font-semibold text-[#10B981] shadow-sm">
              Conférences, sessions live et favoris au même endroit
             </div>
 
-            <h1 className="max-w-4xl text-4xl font-black tracking-tight text-[#F9FAFB] sm:text-5xl lg:text-6xl">
+            <h1 className="max-w-4xl text-4xl font-black leading-tight tracking-tight text-[#F9FAFB] sm:text-5xl lg:text-6xl">
               EventSync rend vos événements plus simples à suivre.
             </h1>
 
@@ -61,7 +61,7 @@ export default async function HomePage() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="#events"
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#10B981] px-6 py-3 font-semibold text-white shadow-glow hover:bg-[#10B981]"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-[#10B981] px-6 py-3 font-semibold text-white shadow-glow hover:bg-[#10B981]"
               >
                 Explorer les événements
                 <ArrowRightIcon className="h-4 w-4" />
@@ -69,15 +69,15 @@ export default async function HomePage() {
 
               <Link
                 href="/sessions"
-                className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/15 px-6 py-3 font-semibold text-[#F9FAFB] hover:border-[#10B981] hover:bg-[#10B981]/15"
+                className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/15 px-6 py-3 font-semibold text-[#F9FAFB] hover:border-[#10B981] hover:bg-[#10B981]/15"
               >
                 Voir les sessions
               </Link>
             </div>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-            <div className="rounded-lg border border-white/10 bg-[#111827] p-5">
+          <div className="grid gap-6 sm:grid-cols-3 lg:grid-cols-1">
+            <div className="metric-item">
               <p className="text-sm font-semibold text-gray-400">
                 Événements
               </p>
@@ -86,14 +86,14 @@ export default async function HomePage() {
               </p>
             </div>
 
-            <div className="rounded-lg border border-white/10 bg-[#111827] p-5">
+            <div className="metric-item">
               <p className="text-sm font-semibold text-gray-400">Sessions</p>
               <p className="mt-2 text-3xl font-black text-[#F9FAFB]">
                 {totalSessions}
               </p>
             </div>
 
-            <div className="rounded-lg border border-white/10 bg-[#111827] p-5">
+            <div className="metric-item">
               <p className="text-sm font-semibold text-gray-400">Accès</p>
               <p className="mt-2 text-3xl font-black text-[#F9FAFB]">
                 Live
@@ -125,7 +125,7 @@ export default async function HomePage() {
         </div>
 
         {events.length === 0 ? (
-          <div className="rounded-lg border border-white/10 bg-[#1F2937] px-6 py-14 text-center shadow-sm">
+          <div className="card-dark rounded-lg px-6 py-14 text-center">
             <CalendarDaysIcon className="mx-auto mb-4 h-14 w-14 text-gray-400" />
 
             <h3 className="text-xl font-semibold text-[#F9FAFB]">
@@ -137,15 +137,13 @@ export default async function HomePage() {
             </p>
           </div>
         ) : (
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {events.map((event) => (
               <Link
                 key={event.id}
                 href={`/events/${event.id}`}
-                className="group flex min-h-80 flex-col overflow-hidden rounded-lg border border-white/10 bg-[#1F2937] shadow-sm hover:-translate-y-1 hover:border-[#10B981] hover:shadow-md"
+                className="quiet-panel group flex min-h-80 flex-col overflow-hidden rounded-lg px-1 py-5 hover:-translate-y-1"
               >
-                <div className="h-2 bg-[#10B981]" />
-
                 <div className="flex flex-1 flex-col p-6">
                   <div className="mb-4 flex items-start justify-between gap-4">
                     <h3 className="text-xl font-bold text-[#F9FAFB] group-hover:text-[#10B981]">

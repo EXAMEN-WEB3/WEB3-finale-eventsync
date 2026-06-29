@@ -33,26 +33,38 @@ export default function LoginPage() {
     setAdminError('')
     setAdminLoading(true)
 
-    const res = await signIn('credentials', {
-      email,
-      password,
-      redirect: false,
-    })
+    try {
+      const res = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
+      })
 
-    setAdminLoading(false)
+      if (res?.error) {
+        setAdminError(
+            res.error === 'CredentialsSignin'
+                ? 'Email ou mot de passe incorrect'
+                : 'Erreur serveur pendant la connexion'
+        )
 
-    if (res?.error) {
-      setAdminError(
-          'Email ou mot de passe incorrect'
-      )
+        toast.error(
+            res.error === 'CredentialsSignin'
+                ? 'Identifiants invalides'
+                : 'Configuration serveur à vérifier'
+        )
+      } else {
+        toast.success(
+            'Connexion admin réussie'
+        )
 
-      toast.error('Identifiants invalides')
-    } else {
-      toast.success(
-          'Connexion admin réussie'
-      )
-
-      router.push('/admin/dashboard')
+        router.push('/admin/dashboard')
+      }
+    } catch (error) {
+      console.error(error)
+      setAdminError('Erreur serveur pendant la connexion')
+      toast.error('Connexion impossible')
+    } finally {
+      setAdminLoading(false)
     }
   }
 
@@ -82,16 +94,16 @@ export default function LoginPage() {
   }
 
   return (
-      <div className="top-10 login-shell flex min-h-screen items-center justify-center px-4 py-12">
+      <div className="login-shell flex min-h-screen items-center justify-center px-4 pb-12 pt-28">
         <div className="w-full max-w-md animate-fade-up">
           <div className="mb-8 flex justify-center">
-            <div className="inline-flex items-center gap-2 rounded-full  px-5 py-3 text-sm font-black uppercase tracking-wide text-[var(--color-foreground)] shadow-2xl backdrop-blur-md">
-              <span className="text-3xl">Event Access</span>
+            <div className="inline-flex items-center gap-2 border-b border-white/10 px-5 py-3 text-sm font-black uppercase tracking-wide text-[var(--color-foreground)] backdrop-blur-md">
+              <span className="text-2xl">Event Access</span>
             </div>
           </div>
 
           
-          <div className="overflow-hidden rounded-2xl border border-white/15 bg-[color-mix(in_srgb,var(--color-surface)_88%,transparent)] shadow-2xl backdrop-blur-xl">
+          <div className="overflow-hidden border-y border-white/15 bg-[color-mix(in_srgb,var(--color-surface)_72%,transparent)] shadow-2xl shadow-black/10 backdrop-blur-xl sm:rounded-lg sm:border">
             
             <div className="flex border-b border-white/10">
               <button
@@ -101,7 +113,7 @@ export default function LoginPage() {
                   className={`flex flex-1 items-center justify-center gap-2 py-4 text-sm font-semibold transition-colors ${
                       tab === 'participant'
                           ? 'border-b-2 border-emerald-600 bg-[#10B981]/15 text-[#10B981]'
-                          : 'text-gray-400 hover:bg-[#111827] hover:text-gray-300'
+                          : 'text-gray-400 hover:bg-white/5 hover:text-gray-300'
                   }`}
               >
                 <UserIcon className="h-4 w-4" />
@@ -113,7 +125,7 @@ export default function LoginPage() {
                   className={`flex flex-1 items-center justify-center gap-2 py-4 text-sm font-semibold transition-colors ${
                       tab === 'admin'
                           ? 'border-b-2 border-emerald-600 bg-[#10B981]/15 text-[#10B981]'
-                          : 'text-gray-400 hover:bg-[#111827] hover:text-gray-300'
+                          : 'text-gray-400 hover:bg-white/5 hover:text-gray-300'
                   }`}
               >
                 <ShieldCheckIcon className="h-4 w-4" />
@@ -158,7 +170,7 @@ export default function LoginPage() {
                             setPseudoError('')
                           }}
                           placeholder="ex : Rakoto, Rabe123..."
-                          className="w-full rounded-xl border border-white/15 px-4 py-2.5 outline-none transition focus:border-transparent focus:ring-2 focus:ring-emerald-500"
+                          className="w-full rounded-lg border border-white/15 px-4 py-2.5 outline-none transition focus:border-transparent focus:ring-2 focus:ring-emerald-500"
                           autoFocus
                       />
 
@@ -171,7 +183,7 @@ export default function LoginPage() {
 
                     <button
                         type="submit"
-                        className="w-full rounded-xl bg-[#10B981] py-2.5 font-semibold text-white transition duration-200 hover:bg-emerald-700"
+                        className="w-full rounded-lg bg-[#10B981] py-2.5 font-semibold text-white transition duration-200 hover:bg-emerald-700"
                     >
                       Rejoindre en tant que
                       participant
@@ -180,7 +192,7 @@ export default function LoginPage() {
                     <button
                         type="button"
                         onClick={() => router.push('/')}
-                        className="w-full rounded-xl border border-white/15 px-4 py-2.5 text-sm font-semibold text-gray-300 transition hover:border-[#10B981] hover:bg-[#10B981]/15 hover:text-[#10B981]"
+                        className="w-full rounded-lg border border-white/15 px-4 py-2.5 text-sm font-semibold text-gray-300 transition hover:border-[#10B981] hover:bg-[#10B981]/15 hover:text-[#10B981]"
                     >
                       Explorer sans connexion
                     </button>
@@ -222,7 +234,7 @@ export default function LoginPage() {
                                   e.target.value
                               )
                           }
-                          className="w-full rounded-xl border border-white/15 px-4 py-2.5 outline-none transition focus:border-transparent focus:ring-2 focus:ring-emerald-500"
+                          className="w-full rounded-lg border border-white/15 px-4 py-2.5 outline-none transition focus:border-transparent focus:ring-2 focus:ring-emerald-500"
                           required
                           autoFocus
                       />
@@ -241,7 +253,7 @@ export default function LoginPage() {
                                   e.target.value
                               )
                           }
-                          className="w-full rounded-xl border border-white/15 px-4 py-2.5 outline-none transition focus:border-transparent focus:ring-2 focus:ring-emerald-500"
+                          className="w-full rounded-lg border border-white/15 px-4 py-2.5 outline-none transition focus:border-transparent focus:ring-2 focus:ring-emerald-500"
                           required
                       />
                     </div>
@@ -255,7 +267,7 @@ export default function LoginPage() {
                     <button
                         type="submit"
                         disabled={adminLoading}
-                        className="w-full rounded-xl bg-[#10B981] py-2.5 font-semibold text-white transition duration-200 hover:bg-emerald-700 disabled:opacity-60"
+                        className="w-full rounded-lg bg-[#10B981] py-2.5 font-semibold text-white transition duration-200 hover:bg-emerald-700 disabled:opacity-60"
                     >
                       {adminLoading
                           ? 'Connexion...'

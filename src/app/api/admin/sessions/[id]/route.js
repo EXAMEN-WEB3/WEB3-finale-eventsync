@@ -11,13 +11,21 @@ export async function PUT(req, { params }) {
   try {
     const { id } = await params
     const { title, description, startTime, endTime, room, capacity, eventId, speakerIds } = await req.json()
+    const parsedStartTime = new Date(startTime)
+    const parsedEndTime = new Date(endTime)
+    if (parsedEndTime <= parsedStartTime) {
+      return NextResponse.json(
+        { error: 'La date de fin doit être supérieure à la date de début sélectionnée' },
+        { status: 400 }
+      )
+    }
     const updated = await prisma.session.update({
       where: { id },
       data: {
         title,
         description,
-        startTime: new Date(startTime),
-        endTime: new Date(endTime),
+        startTime: parsedStartTime,
+        endTime: parsedEndTime,
         room,
         capacity: capacity ? parseInt(capacity) : null,
         eventId,

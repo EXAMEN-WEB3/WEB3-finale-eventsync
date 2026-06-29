@@ -47,8 +47,8 @@ export default function FavoritesPage() {
   }, [favorites])
 
   return (
-    <main className="p-25 min-h-screen bg-[#111827] text-[#F9FAFB]">
-      <section className="border-b border-white/10 bg-[#1F2937]">
+    <main className="min-h-screen bg-[#111827] pt-16 text-[#F9FAFB]">
+      <section className="soft-section border-b border-white/10">
         <div className="container mx-auto px-4 py-10">
           <p className="text-sm font-semibold uppercase tracking-widest text-[#10B981]">
             Sélection personnelle
@@ -68,7 +68,7 @@ export default function FavoritesPage() {
 
       <section className="container mx-auto px-4 py-10">
         {loading ? (
-          <div className="rounded-lg border border-white/10 bg-[#1F2937] px-6 py-14 text-center shadow-sm">
+          <div className="card-dark rounded-lg px-6 py-14 text-center">
             <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-2 border-[#10B981] border-t-transparent" />
 
             <p className="text-gray-400">
@@ -76,7 +76,7 @@ export default function FavoritesPage() {
             </p>
           </div>
         ) : favorites.length === 0 ? (
-          <div className="mx-auto max-w-lg rounded-lg border border-white/10 bg-[#1F2937] px-6 py-14 text-center shadow-sm">
+          <div className="card-dark mx-auto max-w-lg rounded-lg px-6 py-14 text-center">
             <HeartIcon className="mx-auto mb-4 h-16 w-16 text-gray-400" />
 
             <h2 className="text-2xl font-bold text-[#F9FAFB]">
@@ -119,7 +119,7 @@ export default function FavoritesPage() {
                 <Link
                   key={session.id}
                   href={`/sessions/${session.id}`}
-                  className="group flex min-h-72 flex-col rounded-lg border border-white/10 bg-[#1F2937] p-6 shadow-sm hover:-translate-y-1 hover:border-[#10B981] hover:shadow-md"
+                  className="quiet-panel group flex min-h-72 flex-col rounded-lg px-1 py-6 hover:-translate-y-1"
                 >
                   <div className="mb-4 flex items-start justify-between gap-4">
                     <div>

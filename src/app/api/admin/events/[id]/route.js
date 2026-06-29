@@ -11,13 +11,21 @@ export async function PUT(req, { params }) {
   try {
     const { id } = await params
     const { title, description, startDate, endDate, location } = await req.json()
+    const parsedStartDate = new Date(startDate)
+    const parsedEndDate = new Date(endDate)
+    if (parsedEndDate <= parsedStartDate) {
+      return NextResponse.json(
+        { error: 'La date de fin doit être supérieure à la date de début sélectionnée' },
+        { status: 400 }
+      )
+    }
     const updated = await prisma.event.update({
       where: { id },
       data: {
         title,
         description,
-        startDate: new Date(startDate),
-        endDate: new Date(endDate),
+        startDate: parsedStartDate,
+        endDate: parsedEndDate,
         location,
       },
     })

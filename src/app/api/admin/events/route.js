@@ -14,12 +14,20 @@ export async function POST(req) {
     if (!title || !startDate || !endDate || !location) {
       return NextResponse.json({ error: 'Champs manquants' }, { status: 400 })
     }
+    const parsedStartDate = new Date(startDate)
+    const parsedEndDate = new Date(endDate)
+    if (parsedEndDate <= parsedStartDate) {
+      return NextResponse.json(
+        { error: 'La date de fin doit être supérieure à la date de début sélectionnée' },
+        { status: 400 }
+      )
+    }
     const event = await prisma.event.create({
       data: {
         title,
         description: description || '',
-        startDate: new Date(startDate),
-        endDate: new Date(endDate),
+        startDate: parsedStartDate,
+        endDate: parsedEndDate,
         location,
       },
     })

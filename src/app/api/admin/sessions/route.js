@@ -13,12 +13,20 @@ export async function POST(req) {
     if (!title || !startTime || !endTime || !room || !eventId) {
       return NextResponse.json({ error: 'Champs manquants' }, { status: 400 })
     }
+    const parsedStartTime = new Date(startTime)
+    const parsedEndTime = new Date(endTime)
+    if (parsedEndTime <= parsedStartTime) {
+      return NextResponse.json(
+        { error: 'La date de fin doit être supérieure à la date de début sélectionnée' },
+        { status: 400 }
+      )
+    }
     const newSession = await prisma.session.create({
       data: {
         title,
         description: description || '',
-        startTime: new Date(startTime),
-        endTime: new Date(endTime),
+        startTime: parsedStartTime,
+        endTime: parsedEndTime,
         room,
         capacity: capacity ? parseInt(capacity) : null,
         eventId,

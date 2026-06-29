@@ -1,7 +1,9 @@
-﻿export default function AdminLayout({ children }) {
+import AdminLayoutShell from '@/components/admin/AdminLayoutShell'
+
+export default function AdminLayout({ children }) {
   return (
-    <div className="min-h-screen bg-[#111827] text-[#F9FAFB]">
-      {children}
+    <div className="admin-page-shell min-h-screen text-[#F9FAFB]">
+      <AdminLayoutShell>{children}</AdminLayoutShell>
     </div>
   )
 }

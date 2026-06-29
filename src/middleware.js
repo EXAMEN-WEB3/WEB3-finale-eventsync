@@ -1,6 +1,9 @@
 import { withAuth } from "next-auth/middleware"
 import { NextResponse } from "next/server"
 
+const NEXTAUTH_SECRET =
+  process.env.NEXTAUTH_SECRET || "eventsync-local-development-secret"
+
 export default withAuth(
   function middleware(req) {
     if (req.nextUrl.pathname === '/admin/login') {
@@ -9,7 +12,8 @@ export default withAuth(
     return NextResponse.next()
   },
   {
-    pages: { signIn: "/login" },
+    secret: NEXTAUTH_SECRET,
+    pages: { signIn: "/login", error: "/login" },
   }
 )
 

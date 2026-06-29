@@ -40,8 +40,8 @@ export default async function SessionsPage() {
   })
 
   return (
-    <main className="p-25 min-h-screen bg-[#111827] text-[#F9FAFB]">
-      <section className="border-b border-white/10 bg-[#1F2937]">
+    <main className="min-h-screen bg-[#111827] pt-16 text-[#F9FAFB]">
+      <section className="soft-section border-b border-white/10">
         <div className="container mx-auto px-4 py-10">
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
@@ -63,26 +63,28 @@ export default async function SessionsPage() {
               </p>
             </div>
 
-            <Link
-              href="/favourites"
-              className="inline-flex items-center justify-center rounded-lg border border-white/15 px-4 py-2 text-sm font-semibold text-[#F9FAFB] hover:border-[#10B981] hover:bg-[#10B981]/15"
-            >
-              Mes favoris
-            </Link>
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <Link
+                href="/favourites"
+                className="inline-flex min-h-10 items-center justify-center rounded-lg border border-white/15 px-4 py-2 text-sm font-semibold text-[#F9FAFB] hover:border-[#10B981] hover:bg-[#10B981]/15"
+              >
+                Mes favoris
+              </Link>
 
-            <Link
-              href="/planning"
-              className="inline-flex items-center justify-center rounded-lg bg-[#10B981] px-4 py-2 text-sm font-semibold text-white shadow-glow hover:bg-emerald-700"
-            >
-              Mon planning
-            </Link>
+              <Link
+                href="/planning"
+                className="inline-flex min-h-10 items-center justify-center rounded-lg bg-[#10B981] px-4 py-2 text-sm font-semibold text-white shadow-glow hover:bg-emerald-700"
+              >
+                Mon planning
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="container mx-auto px-4 py-10">
         {sessions.length === 0 ? (
-          <div className="rounded-lg border border-white/10 bg-[#1F2937] px-6 py-14 text-center shadow-sm">
+          <div className="card-dark rounded-lg px-6 py-14 text-center">
             <CalendarDaysIcon className="mx-auto mb-4 h-14 w-14 text-gray-400" />
 
             <h3 className="text-xl font-semibold text-[#F9FAFB]">
@@ -109,7 +111,7 @@ export default async function SessionsPage() {
               return (
               <article
                 key={session.id}
-                className="group flex min-h-80 flex-col rounded-lg border border-white/10 bg-[#1F2937] p-6 shadow-sm hover:-translate-y-1 hover:border-[#10B981] hover:shadow-md"
+                className="quiet-panel group flex min-h-80 flex-col rounded-lg px-1 py-6 hover:-translate-y-1"
               >
                 <div className="mb-4 flex items-start justify-between gap-4">
                   <div>

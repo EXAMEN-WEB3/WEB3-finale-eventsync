@@ -53,9 +53,9 @@ export default function ProfilePhotoButton({
     <label
       htmlFor={inputId}
       title="Changer la photo"
-      className="group inline-flex cursor-pointer items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-2.5 py-2 text-left transition hover:-translate-y-0.5 hover:border-[#10B981]/50 hover:bg-[#10B981]/10"
+      className="group inline-flex max-w-full cursor-pointer items-center gap-3 px-0 py-1 text-left transition hover:translate-x-1"
     >
-      <span className={`relative flex shrink-0 items-center justify-center overflow-hidden rounded-full border border-[#10B981]/35 bg-[#10B981]/15 font-black text-[#10B981] shadow-sm ${avatarSize}`}>
+      <span className={`relative flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#10B981]/15 font-black text-[#10B981] shadow-[0_10px_28px_rgba(20,184,166,0.14)] ${avatarSize}`}>
         {photoUrl ? (
           <img
             src={photoUrl}
