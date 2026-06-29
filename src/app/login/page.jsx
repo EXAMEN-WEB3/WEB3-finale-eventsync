@@ -86,7 +86,6 @@ export default function LoginPage() {
         <div className="w-full max-w-md animate-fade-up">
           <div className="mb-8 flex justify-center">
             <div className="inline-flex items-center gap-2 rounded-full  px-5 py-3 text-sm font-black uppercase tracking-wide text-[var(--color-foreground)] shadow-2xl backdrop-blur-md">
-              <SparklesIcon className="h-4 w-4 text-[var(--color-primary)]" />
               <span className="text-3xl">Event Access</span>
             </div>
           </div>
