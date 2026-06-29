@@ -1,5 +1,6 @@
 'use client'
 
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 import {
   Admin,
   Resource,
@@ -29,6 +30,18 @@ import {
 import { dataProvider } from '@/lib/raDataProvider'
 import { authProvider } from '@/lib/raAuthProvider'
 
+const theme = createTheme({
+  components: {
+    MuiTextField: {
+      defaultProps: {
+        slotProps: {
+          input: { notched: undefined },
+        },
+      },
+    },
+  },
+})
+
 const EventList = () => (
   <List>
     <Datagrid rowClick="show">
@@ -46,11 +59,11 @@ const EventList = () => (
 const EventEdit = () => (
   <Edit>
     <SimpleForm>
-      <TextInput source="title" fullWidth required />
-      <TextInput source="description" multiline fullWidth />
+      <TextInput source="title" required />
+      <TextInput source="description" multiline />
       <DateInput source="startDate" />
       <DateInput source="endDate" />
-      <TextInput source="location" fullWidth required />
+      <TextInput source="location" required />
     </SimpleForm>
   </Edit>
 )
@@ -58,11 +71,11 @@ const EventEdit = () => (
 const EventCreate = () => (
   <Create>
     <SimpleForm>
-      <TextInput source="title" fullWidth required />
-      <TextInput source="description" multiline fullWidth />
+      <TextInput source="title" required />
+      <TextInput source="description" multiline />
       <DateInput source="startDate" required />
       <DateInput source="endDate" required />
-      <TextInput source="location" fullWidth required />
+      <TextInput source="location" required />
     </SimpleForm>
   </Create>
 )
@@ -103,8 +116,8 @@ const SessionList = () => (
 const SessionEdit = () => (
   <Edit>
     <SimpleForm>
-      <TextInput source="title" fullWidth required />
-      <TextInput source="description" multiline fullWidth />
+      <TextInput source="title" required />
+      <TextInput source="description" multiline />
       <DateInput source="startTime" required />
       <DateInput source="endTime" required />
       <TextInput source="room" required />
@@ -119,8 +132,8 @@ const SessionEdit = () => (
 const SessionCreate = () => (
   <Create>
     <SimpleForm>
-      <TextInput source="title" fullWidth required />
-      <TextInput source="description" multiline fullWidth />
+      <TextInput source="title" required />
+      <TextInput source="description" multiline />
       <DateInput source="startTime" required />
       <DateInput source="endTime" required />
       <TextInput source="room" required />
@@ -166,9 +179,9 @@ const SpeakerList = () => (
 const SpeakerEdit = () => (
   <Edit>
     <SimpleForm>
-      <TextInput source="name" fullWidth required />
-      <TextInput source="bio" multiline fullWidth />
-      <TextInput source="photoUrl" fullWidth label="Photo URL" />
+      <TextInput source="name" required />
+      <TextInput source="bio" multiline />
+      <TextInput source="photoUrl" label="Photo URL" />
     </SimpleForm>
   </Edit>
 )
@@ -176,9 +189,9 @@ const SpeakerEdit = () => (
 const SpeakerCreate = () => (
   <Create>
     <SimpleForm>
-      <TextInput source="name" fullWidth required />
-      <TextInput source="bio" multiline fullWidth />
-      <TextInput source="photoUrl" fullWidth label="Photo URL" />
+      <TextInput source="name" required />
+      <TextInput source="bio" multiline />
+      <TextInput source="photoUrl" label="Photo URL" />
     </SimpleForm>
   </Create>
 )
@@ -195,37 +208,39 @@ const SpeakerShow = () => (
 
 export default function RaAdminApp() {
   return (
-    <Admin
-      dataProvider={dataProvider}
-      authProvider={authProvider}
-      requireAuth
-      title="EventSync Admin"
-      locale="fr"
-    >
-      <Resource
-        name="events"
-        list={EventList}
-        edit={EventEdit}
-        create={EventCreate}
-        show={EventShow}
-        recordRepresentation="title"
-      />
-      <Resource
-        name="sessions"
-        list={SessionList}
-        edit={SessionEdit}
-        create={SessionCreate}
-        show={SessionShow}
-        recordRepresentation="title"
-      />
-      <Resource
-        name="speakers"
-        list={SpeakerList}
-        edit={SpeakerEdit}
-        create={SpeakerCreate}
-        show={SpeakerShow}
-        recordRepresentation="name"
-      />
-    </Admin>
+    <ThemeProvider theme={theme}>
+      <Admin
+        dataProvider={dataProvider}
+        authProvider={authProvider}
+        requireAuth
+        title="EventSync Admin"
+        locale="fr"
+      >
+        <Resource
+          name="events"
+          list={EventList}
+          edit={EventEdit}
+          create={EventCreate}
+          show={EventShow}
+          recordRepresentation="title"
+        />
+        <Resource
+          name="sessions"
+          list={SessionList}
+          edit={SessionEdit}
+          create={SessionCreate}
+          show={SessionShow}
+          recordRepresentation="title"
+        />
+        <Resource
+          name="speakers"
+          list={SpeakerList}
+          edit={SpeakerEdit}
+          create={SpeakerCreate}
+          show={SpeakerShow}
+          recordRepresentation="name"
+        />
+      </Admin>
+    </ThemeProvider>
   )
 }
