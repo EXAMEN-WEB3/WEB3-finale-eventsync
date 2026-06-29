@@ -1,4 +1,4 @@
-﻿﻿'use client'
+﻿'use client'
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -7,6 +7,7 @@ import { useEffect, useMemo, useState } from 'react'
 import {
   ArrowLeftEndOnRectangleIcon,
   ArrowTopRightOnSquareIcon,
+  BeakerIcon,
   BuildingOfficeIcon,
   CalendarDaysIcon,
   ChartBarIcon,
@@ -25,6 +26,7 @@ const navItems = [
   { href: '/admin/sessions', label: 'Sessions', icon: PlayCircleIcon },
   { href: '/admin/speakers', label: 'Intervenants', icon: UserGroupIcon },
   { href: '/admin/rooms', label: 'Salles', icon: BuildingOfficeIcon },
+  { href: '/admin/ra', label: 'React Admin', icon: BeakerIcon },
 ]
 
 export default function AdminSidebar() {
