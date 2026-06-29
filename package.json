@@ -14,7 +14,9 @@
     "next": "16.2.4",
     "next-auth": "^4.24.14",
     "prisma": "^5.22.0",
+    "ra-data-simple-rest": "^5.15.0",
     "react": "19.2.4",
+    "react-admin": "^5.15.1",
     "react-dom": "19.2.4",
     "react-hot-toast": "^2.4.1"
   },
