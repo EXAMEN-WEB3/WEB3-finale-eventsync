@@ -3,6 +3,11 @@ import { prisma } from '@/lib/prisma'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/authOptions'
 
+function serializeLinks(links) {
+  if (!links) return null
+  return typeof links === 'string' ? links : JSON.stringify(links)
+}
+
 export async function POST(req) {
   const session = await getServerSession(authOptions)
   if (!session) {
@@ -12,7 +17,7 @@ export async function POST(req) {
     const { name, bio, photoUrl, links } = await req.json()
     if (!name) return NextResponse.json({ error: 'Le nom est requis' }, { status: 400 })
     const speaker = await prisma.speaker.create({
-      data: { name, bio: bio || null, photoUrl: photoUrl || null, links: links || null },
+      data: { name, bio: bio || null, photoUrl: photoUrl || null, links: serializeLinks(links) },
     })
     return NextResponse.json(speaker, { status: 201 })
   } catch (error) {
